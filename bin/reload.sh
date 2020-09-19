@@ -1,12 +1,13 @@
+CONTAINER_NAME='dev_server_flask'
+
 # Build new version
 docker build -t skeleton-dock-python-flask:latest .
 
 # Kill old versions
-OLD_IDS=$(docker ps -a -q --filter ancestor=skeleton-dock-python-flask --format="{{.ID}}")
-for OLD_ID in $OLD_IDS; do
-    docker stop $OLD_ID
-    docker rm $OLD_ID
-done
+if [[ $(docker ps -a -q --filter ancestor=$CONTAINER_NAME --format="{{.ID}}") ]]; then
+    docker stop $CONTAINER_NAME
+    docker rm $CONTAINER_NAME
+fi
 
 # Run new version
-docker run -d -p 5000:5000 -e FLASK_SECRET_KEY="$FLASK_SECRET_KEY" skeleton-dock-python-flask
+docker run -d -p 5000:5000 skeleton-dock-python-flask

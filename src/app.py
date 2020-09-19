@@ -1,10 +1,10 @@
-
 from os import environ
 
 from flask import Flask
 from flask_login import LoginManager
 from flask_login import current_user
 from flask_login import login_required
+
 from user import User
 
 
@@ -23,7 +23,7 @@ def load_user(user_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return 'login'
+    return 'login revived!'
 
 
 @app.route("/")
