@@ -1,8 +1,10 @@
 from flask import flash
 from flask import redirect
 from flask import render_template
+from flask import request
 from flask import url_for
 from flask_login import current_user
+from flask_login import login_user
 from flask_login import login_required
 from is_safe_url import is_safe_url
 
@@ -27,10 +29,7 @@ def login():
 
         next_page = request.args.get('next')
         
-        if not is_safe_url(next_page):
-            return flask.abort(400)
-        
-        if not next_page or url_parse(next_page).netloc != '':
+        if not next_page or not is_safe_url(next_page, request.host):
             next_page = url_for('index')
             
         return redirect(next_page)        

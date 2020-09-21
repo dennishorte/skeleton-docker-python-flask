@@ -1,4 +1,6 @@
 from flask_login import UserMixin
+from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
 
 from app import db
 from app import login
@@ -22,4 +24,4 @@ class User(UserMixin, db.Model):
 
 @login.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.filter_by(id=user_id).first()
